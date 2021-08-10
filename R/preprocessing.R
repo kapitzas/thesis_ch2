@@ -113,6 +113,8 @@ names(distances) <- c("dibu", "dico", "dila", "diri", "diro")
 rm(elevation, roughness, slope, srtm)
 
 #PA
+# Available through:
+# Protected areas of the world https://www.protectedplanet.net/en/thematic-areas/wdpa?tab=WDPA
 plot(raster(paste0("/Users/kapitzas/OneDrive - The University of Melbourne/PhD - Large Files/PhD - Raw Data/Global/preprocessed/PA_", country_abbr, ".tif")))
 path <- "/Users/kapitzas/OneDrive - The University of Melbourne/PhD - Large Files/PhD - Raw Data/Global/Global Protected Areas"
 mask <- readRDS(paste0("/Users/kapitzas/OneDrive - The University of Melbourne/PhD/chapter1/birds_ccimpacts/RData/mask_", country_abbr, ".rds"))
@@ -170,23 +172,6 @@ lu[lu[]%in%c(90, 100)] <- 7 #herbaceous wetland, moss, lichen
 lu[lu[]%in%c(60, 70)] <- 8 #bare, sparese, ice
 lu[lu[]%in%c(0, 80, 200)] <- NA #permanent water bodies (covered by distance to river and lake covariates)
 
-plot(lu)
-
-
-# world_lu <- raster("~/OneDrive - The University of Melbourne/PhD - Large Files/PhD - Raw Data/Global/LCType.tif")
-# lu <- crop(world_lu, mask)
-# lu <- projectRaster(lu, mask, method = "ngb")
-# lu <- mask(lu, mask)
-# 
-# #Reclassify, see original calsses below.
-# lu[lu[]%in%c(12,14)] <- 100
-# lu[lu[]%in%c(6, 7,9,10,8)] <- 200
-# lu[lu[]%in%c(1,2,3,4,5)] <- 300
-# lu[lu[]%in%c(13)] <- 400
-# lu[lu[]%in%c(11,15,16,0)] <- 500
-# 
-# lu <- lu/100 - 1
-# table(lu[])
 names(lu) <- "landuse"
 # 0	Water
 # 1	Evergreen Needle leaf Forest
@@ -205,10 +190,12 @@ names(lu) <- "landuse"
 # 14	Cropland/Natural Vegetation Mosaic
 # 15	Snow and Ice
 # 16	Barren or Sparsely Vegetated
-plot(lu)
+
 #---------------------------#
 #####----II. BIOCLIM DATA####
 #---------------------------#
+
+# Data available through https://www.worldclim.org/data/index.html# (worldclim 1.4)s
 #3. a) Download tiles, mosaic, crop and write
 if(country_abbr == "aus"){
   tiles <- c("39", "310", "311", "49", "410", "411")
